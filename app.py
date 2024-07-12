@@ -1,6 +1,11 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from first_aid_bot import FirstAidBot
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
@@ -19,4 +24,6 @@ def get_advice():
     return jsonify({'response': response})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)  # Change port if needed
+    # Get the port from environment variable or default to 5001
+    port = int(os.environ.get('PORT', 5001))
+    app.run(host='0.0.0.0', port=port, debug=True)
